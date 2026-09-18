@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Talent Acquisition Leveling, defined via Levels.fyi — Google, Microsoft, Salesforce, Amazon, Meta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --page:#E7ECF2;--sheet:#FFFFFF;--ink:#16202E;--muted:#5C6B7E;--faint:#8593A3;
+    --line:#DCE3EB;--line-strong:#B9C4D1;--rowalt:#F7F9FB;--chip:#EEF2F7;
+    --google:#3B6FE0;--microsoft:#12857A;--amazon:#C67B12;--meta:#4B54D6;--salesforce:#1591C4;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{margin:0;background:var(--page);color:var(--ink);font-family:"Inter",system-ui,sans-serif;font-size:15px;line-height:1.5;padding:32px 18px 72px}
+  .sheet{max-width:1120px;margin:0 auto;background:var(--sheet);border:1px solid var(--line);border-radius:6px;box-shadow:0 1px 2px rgba(22,32,46,.04),0 18px 48px -28px rgba(22,32,46,.28);padding:44px 46px 40px}
+  h1,h2,h3{font-family:"Space Grotesk",sans-serif;margin:0;color:var(--ink)}
+
+  .masthead{border-bottom:2px solid var(--ink);padding-bottom:20px;margin-bottom:24px}
+  h1{font-size:26px;font-weight:700;letter-spacing:-.015em;line-height:1.14}
+  .sub{color:var(--muted);font-size:15px;margin-top:8px;max-width:72ch}
+  .attrib{margin-top:13px;font-size:12.5px;color:var(--faint)}
+  .attrib a{color:var(--microsoft);text-decoration:none}
+  .attrib a:hover{text-decoration:underline}
+
+  .readme{background:#F7F9FB;border:1px solid var(--line);border-radius:5px;padding:16px 18px;margin-bottom:30px}
+  .readme h3{font-size:13px;font-weight:600;margin-bottom:9px}
+  .readme p{margin:0 0 8px;font-size:13px;color:var(--muted);line-height:1.5}
+  .readme p:last-child{margin-bottom:0}
+  .readme b{color:var(--ink);font-weight:600}
+
+  .section-title{display:flex;align-items:baseline;gap:12px;margin:38px 0 4px}
+  h2{font-size:20px;font-weight:700;letter-spacing:-.01em}
+  .section-note{font-size:12.5px;color:var(--faint)}
+  .rule{height:2px;background:var(--ink);border-radius:2px;margin:9px 0 18px}
+
+  /* per-company ladders */
+  .ladders{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .ladder{border:1px solid var(--line);border-top-width:3px;border-radius:5px;overflow:hidden;background:#fff}
+  .ladder h3{font-size:14.5px;font-weight:600;padding:11px 12px 2px}
+  .ladder .meta{font-size:11px;color:var(--muted);padding:0 12px 9px;line-height:1.4}
+  .band{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:10.5px;color:var(--faint);padding:7px 12px 6px;background:#FBFCFD;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  .rung{display:grid;grid-template-columns:auto 1fr;gap:9px;align-items:baseline;padding:8px 12px;border-bottom:1px solid var(--line)}
+  .rung:last-child{border-bottom:none}
+  .rung.apex{background:var(--rowalt)}
+  .rung .lvl{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:11.5px;color:#fff;padding:2px 7px;border-radius:4px;justify-self:start;white-space:nowrap}
+  .rung .r{min-width:0}
+  .rung .scope{font-size:12px;color:var(--ink);font-weight:500;line-height:1.25}
+  .rung.apex .scope{font-weight:600}
+  .rung .sub2{display:block;font-size:10.5px;color:var(--faint);margin-top:2px;line-height:1.3}
+
+  /* aligned matrix */
+  .grid-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px}
+  table{border-collapse:collapse;width:100%;min-width:820px;font-size:13px}
+  thead th{background:#F4F6F9;text-align:left;padding:12px 12px;border-bottom:1px solid var(--line-strong);vertical-align:bottom}
+  .co-th{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:13px;display:flex;align-items:center;gap:7px}
+  .co-th .dot{width:9px;height:9px;border-radius:50%;flex:none}
+  tbody td{padding:11px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+  .grouprow td{background:#EFF3F7;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:11px;color:var(--muted);padding:7px 12px}
+  .rowhead .tier{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:13.5px;line-height:1.2}
+  .rowhead .scope{font-size:11.5px;color:var(--muted);margin-top:3px;line-height:1.35}
+  .rowhead{min-width:184px}
+  .apexrow td{background:var(--rowalt)}
+  .apexrow .tier{color:var(--ink)}
+  .code{display:inline-block;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:12px;padding:2px 8px;border-radius:4px;color:#fff;white-space:nowrap}
+  td .note{display:block;font-size:10.5px;color:var(--faint);margin-top:4px}
+
+  .footnote{margin-top:14px;font-size:12px;color:var(--muted);line-height:1.45;padding-left:12px;border-left:2px solid var(--line-strong)}
+  .doc-foot{margin-top:34px;padding-top:18px;border-top:1px solid var(--line);color:var(--faint);font-size:12px;line-height:1.55}
+  .doc-foot b{color:var(--muted);font-weight:600}
+  .doc-foot a{color:var(--microsoft);text-decoration:none}
+  .doc-foot a:hover{text-decoration:underline}
+
+  @media (max-width:760px){
+    body{padding:14px 8px 48px}.sheet{padding:26px 18px 30px}
+    .ladders{grid-template-columns:1fr 1fr}h1{font-size:21px}
+  }
+  @media print{body{background:#fff;padding:0}.sheet{box-shadow:none;border:none;max-width:none}.ladder,.grid-wrap{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <header class="masthead">
+    <h1>Talent Acquisition Leveling, defined via Levels.fyi</h1>
+    <p class="sub">The recruiting career ladder at Google, Microsoft, Salesforce, Amazon, and Meta — from an entry coordinator up through leadership to <b>VP of Talent Acquisition</b> — using the level codes Levels.fyi reports for the Recruiter role at each company.</p>
+    <p class="attrib">Level data: Levels.fyi (<a href="https://www.levels.fyi">levels.fyi</a>), company Recruiter pages. As of September 2026.</p>
+  </header>
+
+  <section class="readme">
+    <h3>How Levels.fyi defines these levels</h3>
+    <p>Levels.fyi maps levels across companies <b>by scope and responsibility, and by real employee transfers — not by compensation</b>. The question it answers is: "what level would I transfer to if I switched companies?"</p>
+    <p>It tracks each company in that company's <b>own codes</b>: Google's L-scale, Microsoft's numeric bands, Meta's IC-scale, Amazon's L-scale. Salesforce publishes no numeric codes on postings (its MTS ladder is engineering-only), so <b>Levels.fyi normalizes Salesforce recruiters onto an L4–L7 scale</b>.</p>
+    <p>Levels.fyi's Recruiter page covers the <b>individual-contributor</b> levels. The <b>leadership tiers</b> above first-line management — Recruiting Manager up to VP of Talent Acquisition — follow each company's broader level scale; the first management level overlaps the senior IC levels in code.</p>
+  </section>
+
+  <!-- PART A: per-company ladders -->
+  <div class="section-title"><h2>The ladder at each company</h2><span class="section-note">entry at the bottom · VP of Talent Acquisition at the top</span></div>
+  <div class="rule"></div>
+  <div class="ladders">
+
+    <div class="ladder" style="border-top-color:var(--google)">
+      <h3>Google</h3>
+      <p class="meta">IC L3–L7 · leadership L6–L10</p>
+      <div class="band">Leadership</div>
+      <div class="rung apex"><span class="lvl" style="background:var(--google)">L9–L10</span><span class="r"><span class="scope">VP of Talent Acquisition</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--google)">L8</span><span class="r"><span class="scope">Director, Talent Acquisition</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--google)">L7</span><span class="r"><span class="scope">Senior / Group Recruiting Manager</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--google)">L6</span><span class="r"><span class="scope">Recruiting Manager</span></span></div>
+      <div class="band">Individual contributor</div>
+      <div class="rung"><span class="lvl" style="background:var(--google)">L6–L7</span><span class="r"><span class="scope">Lead / Principal Recruiter</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--google)">L5</span><span class="r"><span class="scope">Senior Recruiter</span><span class="sub2">Levels.fyi label</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--google)">L4</span><span class="r"><span class="scope">Recruiter</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--google)">L3</span><span class="r"><span class="scope">Coordinator (entry)</span></span></div>
+    </div>
+
+    <div class="ladder" style="border-top-color:var(--microsoft)">
+      <h3>Microsoft</h3>
+      <p class="meta">IC 59–63 · leadership 63–70+</p>
+      <div class="band">Leadership</div>
+      <div class="rung apex"><span class="lvl" style="background:var(--microsoft)">69–70+</span><span class="r"><span class="scope">VP of Talent Acquisition</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--microsoft)">67–68</span><span class="r"><span class="scope">Director, Talent Acquisition</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--microsoft)">65–66</span><span class="r"><span class="scope">Senior / Group Recruiting Manager</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--microsoft)">63–64</span><span class="r"><span class="scope">Recruiting Manager</span></span></div>
+      <div class="band">Individual contributor</div>
+      <div class="rung"><span class="lvl" style="background:var(--microsoft)">65–67</span><span class="r"><span class="scope">Principal Recruiter</span><span class="sub2">specialist tracks</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--microsoft)">63</span><span class="r"><span class="scope">Senior Recruiter</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--microsoft)">61–62</span><span class="r"><span class="scope">Recruiter</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--microsoft)">59–60</span><span class="r"><span class="scope">Coordinator (entry)</span></span></div>
+    </div>
+
+    <div class="ladder" style="border-top-color:var(--salesforce)">
+      <h3>Salesforce</h3>
+      <p class="meta">IC L4–L7 (normalized) · leadership by title</p>
+      <div class="band">Leadership</div>
+      <div class="rung apex"><span class="lvl" style="background:var(--salesforce)">VP / SVP</span><span class="r"><span class="scope">VP of Talent Acquisition</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--salesforce)">Dir</span><span class="r"><span class="scope">Director / Senior Director</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--salesforce)">Sr Mgr</span><span class="r"><span class="scope">Senior Recruiting Manager</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--salesforce)">Mgr</span><span class="r"><span class="scope">Recruiting Manager</span></span></div>
+      <div class="band">Individual contributor</div>
+      <div class="rung"><span class="lvl" style="background:var(--salesforce)">L7</span><span class="r"><span class="scope">Lead / Principal Recruiter</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--salesforce)">L6</span><span class="r"><span class="scope">Senior Recruiter</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--salesforce)">L5</span><span class="r"><span class="scope">Recruiter</span><span class="sub2">≈ 5–6 yrs experience</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--salesforce)">L4</span><span class="r"><span class="scope">Coordinator (entry)</span></span></div>
+    </div>
+
+    <div class="ladder" style="border-top-color:var(--amazon)">
+      <h3>Amazon</h3>
+      <p class="meta">IC L4–L7 · leadership L6–L10</p>
+      <div class="band">Leadership</div>
+      <div class="rung apex"><span class="lvl" style="background:var(--amazon)">L10</span><span class="r"><span class="scope">VP of Talent Acquisition</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--amazon)">L8</span><span class="r"><span class="scope">Director, Talent Acquisition</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--amazon)">L7</span><span class="r"><span class="scope">Senior Recruiting Manager</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--amazon)">L6</span><span class="r"><span class="scope">Recruiting Manager</span></span></div>
+      <div class="band">Individual contributor</div>
+      <div class="rung"><span class="lvl" style="background:var(--amazon)">L7</span><span class="r"><span class="scope">Principal Recruiter</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--amazon)">L6</span><span class="r"><span class="scope">Senior Recruiter</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--amazon)">L5</span><span class="r"><span class="scope">Recruiter</span><span class="sub2">≈ 8–9 yrs experience</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--amazon)">L4</span><span class="r"><span class="scope">Coordinator (entry)</span><span class="sub2">≈ 4–5 yrs</span></span></div>
+    </div>
+
+    <div class="ladder" style="border-top-color:var(--meta)">
+      <h3>Meta</h3>
+      <p class="meta">IC IC3–IC8 · leadership M1–VP</p>
+      <div class="band">Leadership</div>
+      <div class="rung apex"><span class="lvl" style="background:var(--meta)">VP</span><span class="r"><span class="scope">VP of Talent Acquisition</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--meta)">D1 ≈ IC8</span><span class="r"><span class="scope">Director, Talent Acquisition</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--meta)">M2 ≈ IC7</span><span class="r"><span class="scope">Senior Recruiting Manager</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--meta)">M1 ≈ IC6</span><span class="r"><span class="scope">Recruiting Manager</span></span></div>
+      <div class="band">Individual contributor</div>
+      <div class="rung"><span class="lvl" style="background:var(--meta)">IC6</span><span class="r"><span class="scope">Staff / Lead Recruiter</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--meta)">IC5</span><span class="r"><span class="scope">Senior Recruiter</span><span class="sub2">≈ 9–10 yrs experience</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--meta)">IC4</span><span class="r"><span class="scope">Recruiter</span></span></div>
+      <div class="rung"><span class="lvl" style="background:var(--meta)">IC3</span><span class="r"><span class="scope">Coordinator (entry)</span></span></div>
+    </div>
+
+  </div>
+  <p class="footnote">Individual-contributor level codes are from Levels.fyi's Recruiter pages; leadership tiers (Recruiting Manager up to VP of Talent Acquisition) follow each company's broader level scale. The first management level overlaps senior IC levels in code — e.g., Amazon L6 and Meta IC6 are both a senior-IC band and a first-line-manager band.</p>
+
+  <!-- PART B: aligned matrix -->
+  <div class="section-title"><h2>Aligned by scope</h2><span class="section-note">Levels.fyi maps by scope &amp; transfers, not pay — directional</span></div>
+  <div class="rule"></div>
+  <div class="grid-wrap">
+    <table>
+      <thead>
+        <tr>
+          <th class="rowhead">Tier</th>
+          <th><span class="co-th"><span class="dot" style="background:var(--google)"></span>Google</span></th>
+          <th><span class="co-th"><span class="dot" style="background:var(--microsoft)"></span>Microsoft</span></th>
+          <th><span class="co-th"><span class="dot" style="background:var(--salesforce)"></span>Salesforce</span></th>
+          <th><span class="co-th"><span class="dot" style="background:var(--amazon)"></span>Amazon</span></th>
+          <th><span class="co-th"><span class="dot" style="background:var(--meta)"></span>Meta</span></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr class="grouprow"><td colspan="6">Leadership</td></tr>
+        <tr class="apexrow">
+          <td class="rowhead"><div class="tier">VP of Talent Acquisition</div><div class="scope">Owns the recruiting function</div></td>
+          <td><span class="code" style="background:var(--google)">L9–L10</span></td>
+          <td><span class="code" style="background:var(--microsoft)">69–70+</span></td>
+          <td><span class="code" style="background:var(--salesforce)">VP / SVP</span></td>
+          <td><span class="code" style="background:var(--amazon)">L10</span></td>
+          <td><span class="code" style="background:var(--meta)">VP</span></td>
+        </tr>
+        <tr>
+          <td class="rowhead"><div class="tier">Director, Talent Acquisition</div><div class="scope">Owns TA for a business or region</div></td>
+          <td><span class="code" style="background:var(--google)">L8</span></td>
+          <td><span class="code" style="background:var(--microsoft)">67–68</span></td>
+          <td><span class="code" style="background:var(--salesforce)">Director</span></td>
+          <td><span class="code" style="background:var(--amazon)">L8</span></td>
+          <td><span class="code" style="background:var(--meta)">D1 ≈ IC8</span></td>
+        </tr>
+        <tr>
+          <td class="rowhead"><div class="tier">Senior / Group Recruiting Manager</div><div class="scope">Manages recruiters or a team of teams</div></td>
+          <td><span class="code" style="background:var(--google)">L7</span></td>
+          <td><span class="code" style="background:var(--microsoft)">65–66</span></td>
+          <td><span class="code" style="background:var(--salesforce)">Sr Manager</span></td>
+          <td><span class="code" style="background:var(--amazon)">L7</span></td>
+          <td><span class="code" style="background:var(--meta)">M2 ≈ IC7</span></td>
+        </tr>
+        <tr>
+          <td class="rowhead"><div class="tier">Recruiting Manager</div><div class="scope">Leads a small recruiting team</div></td>
+          <td><span class="code" style="background:var(--google)">L6</span></td>
+          <td><span class="code" style="background:var(--microsoft)">63–64</span></td>
+          <td><span class="code" style="background:var(--salesforce)">Manager</span></td>
+          <td><span class="code" style="background:var(--amazon)">L6</span></td>
+          <td><span class="code" style="background:var(--meta)">M1 ≈ IC6</span></td>
+        </tr>
+        <tr class="grouprow"><td colspan="6">Individual contributor</td></tr>
+        <tr>
+          <td class="rowhead"><div class="tier">Lead / Principal Recruiter</div><div class="scope">Strategy, exec &amp; hardest roles</div></td>
+          <td><span class="code" style="background:var(--google)">L6–L7</span></td>
+          <td><span class="code" style="background:var(--microsoft)">65–67</span><span class="note">specialist tracks</span></td>
+          <td><span class="code" style="background:var(--salesforce)">L7</span></td>
+          <td><span class="code" style="background:var(--amazon)">L7</span></td>
+          <td><span class="code" style="background:var(--meta)">IC6–IC7</span></td>
+        </tr>
+        <tr>
+          <td class="rowhead"><div class="tier">Senior Recruiter</div><div class="scope">Complex / critical reqs</div></td>
+          <td><span class="code" style="background:var(--google)">L5</span></td>
+          <td><span class="code" style="background:var(--microsoft)">63</span></td>
+          <td><span class="code" style="background:var(--salesforce)">L6</span></td>
+          <td><span class="code" style="background:var(--amazon)">L6</span></td>
+          <td><span class="code" style="background:var(--meta)">IC5</span></td>
+        </tr>
+        <tr>
+          <td class="rowhead"><div class="tier">Recruiter</div><div class="scope">Owns full-cycle reqs</div></td>
+          <td><span class="code" style="background:var(--google)">L4</span></td>
+          <td><span class="code" style="background:var(--microsoft)">61–62</span></td>
+          <td><span class="code" style="background:var(--salesforce)">L5</span></td>
+          <td><span class="code" style="background:var(--amazon)">L5</span></td>
+          <td><span class="code" style="background:var(--meta)">IC4</span></td>
+        </tr>
+        <tr>
+          <td class="rowhead"><div class="tier">Coordinator / Entry</div><div class="scope">Scheduling, pipeline support</div></td>
+          <td><span class="code" style="background:var(--google)">L3</span></td>
+          <td><span class="code" style="background:var(--microsoft)">59</span></td>
+          <td><span class="code" style="background:var(--salesforce)">L4</span></td>
+          <td><span class="code" style="background:var(--amazon)">L4</span></td>
+          <td><span class="code" style="background:var(--meta)">IC3</span></td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="footnote">Amazon's Recruiter entry level is L4 but Levels.fyi reports ≈4–5 years of experience there and ≈8–9 at L5 — Amazon's numbers run about a level "ahead" of Google/Meta for the same scope. Microsoft's base <em>Recruiter</em> track tops at 63 on Levels.fyi; its Technical and Leadership Recruiter tracks extend to ≈67.</p>
+
+  <p class="doc-foot">
+    <b>Source &amp; attribution.</b> Individual-contributor level codes from Levels.fyi (<a href="https://www.levels.fyi">https://www.levels.fyi</a>). Recruiter pages:
+    <a href="https://www.levels.fyi/companies/google/salaries/recruiter">Google</a> ·
+    <a href="https://www.levels.fyi/companies/microsoft/salaries/recruiter">Microsoft</a> ·
+    <a href="https://www.levels.fyi/companies/salesforce/salaries/recruiter">Salesforce</a> ·
+    <a href="https://www.levels.fyi/companies/amazon/salaries/recruiter">Amazon</a> ·
+    <a href="https://www.levels.fyi/companies/meta/salaries/recruiter">Meta</a>.
+    Cross-company mapping methodology: Levels.fyi Compare Levels.<br>
+    <b>Caveats.</b> Levels.fyi maps levels by scope and employee transfers, not pay; mappings are directional. Leadership tiers above first-line management follow each company's broader level scale and overlap senior IC levels in code. Salesforce recruiter codes are Levels.fyi's normalization, not official Salesforce grades.
+  </p>
+
+</div>
+</body>
+</html>
